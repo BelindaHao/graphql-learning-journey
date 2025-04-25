@@ -4,7 +4,8 @@
   "description": "Welcome to my GraphQL learning project! This repository documents my journey in learning GraphQL through practical implementation.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/index"
   },
   "keywords": [],
   "author": "",

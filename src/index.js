@@ -1,4 +1,5 @@
 const { ApolloServer, gql }  = require("apollo-server");
+const { categories, products } = require("./data");
 
 const typeDefs = gql`
   type Query {
@@ -36,8 +37,32 @@ const typeDefs = gql`
     Note: Empty array means uncategorized.
     Example: ["Bike", "Cloth", "Kitchen"]
     """
-    categories: [String!]!
+    categories: [Category!]!
+
+    """
+    """
+    products: [Product!]!
+
+    """
+    """
+    product(id: ID!): Product
   }
+
+  type Category {
+    id: ID!
+    name: String!
+  }
+  
+  type Product {
+    id: ID!
+    name: String
+    description: String
+    quantity: Int!
+    price: Float!
+    onSale: Boolean!
+    categoryId: ID!
+    category: Category!
+}
 `;
 
 const resolvers = {
@@ -55,15 +80,25 @@ const resolvers = {
     onSale: () => false,
     
     // Product categorization
-    categories: () => ["Bike", "Cloth", "Kitchen"]
+    categories: () => categories,
+
+    // Products
+    products: () => products,
+
+    // Product
+    product: (_, { id }) => products.find(p => p.id === id),
+  },
+  Product: {
+    category: (parent) => categories.find(c => c.id = parent.categoryId)
   }
+
 };
 
 const server = new ApolloServer({
-        typeDefs,
-        resolvers
+  typeDefs,
+  resolvers
 });
 
 server.listen().then( ({url}) => {
-    console.log("Server is ready at " + url);
+  console.log("Server is ready at " + url);
 })
