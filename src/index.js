@@ -40,17 +40,33 @@ const typeDefs = gql`
     categories: [Category!]!
 
     """
+    Returns all available products in the system.
+    Returns: Non-null array of non-null Product objects.
     """
     products: [Product!]!
 
     """
+    Retrieves a single product by its unique identifier.
+    Parameters:
+      id: The unique ID of the product to retrieve (required)
+    Returns: A single Product object or null if not found.
     """
     product(id: ID!): Product
+
+    """
+    Fetches a specific category by its unique identifier.
+    Parameters:
+      id: The unique ID of the category to retrieve (required)
+    Returns: A Category object or null if not found.
+    Note: Includes all products belonging to this category.
+    """
+    category(id: ID!): Category
   }
 
   type Category {
     id: ID!
     name: String!
+    products: [Product]
   }
   
   type Product {
@@ -87,9 +103,15 @@ const resolvers = {
 
     // Product
     product: (_, { id }) => products.find(p => p.id === id),
+
+    // Category
+    category: (_, { id }) => categories.find(c => c.id === id),
   },
   Product: {
-    category: (parent) => categories.find(c => c.id = parent.categoryId)
+    category: (parent) => categories.find(c => c.id === parent.categoryId)
+  },
+  Category: {
+    products: (parent) => products.filter(p => p.categoryId === parent.id)
   }
 
 };
