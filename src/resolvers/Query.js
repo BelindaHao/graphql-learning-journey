@@ -17,7 +17,14 @@ exports.Query =  {
     categories: () => categories,
 
     // Products
-    products: () => products,
+    products: (_, { filter }) => {
+      let filterredProducts = products;
+      if(filter) {
+        return filterredProducts.filter( p => p.onSale === filter.onSale);
+      }
+
+      return filterredProducts;
+    },
 
     // Product
     product: (_, { id }) => products.find(p => p.id === id),

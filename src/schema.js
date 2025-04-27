@@ -42,7 +42,7 @@ exports.typeDefs = gql`
     Returns all available products in the system.
     Returns: Non-null array of non-null Product objects.
     """
-    products: [Product!]!
+    products(filter: ProductsFilterInput): [Product!]!
 
     """
     Retrieves a single product by its unique identifier.
@@ -59,7 +59,7 @@ exports.typeDefs = gql`
     Returns: A Category object or null if not found.
     Note: Includes all products belonging to this category.
     """
-    category(id: ID!): Category
+    category(id: ID!, filter: ProductsFilterInput): Category
   }
 
   type Category {
@@ -77,5 +77,9 @@ exports.typeDefs = gql`
     onSale: Boolean!
     categoryId: ID!
     category: Category!
-}
+  }
+
+  input ProductsFilterInput {
+    onSale: Boolean
+  }
 `;
