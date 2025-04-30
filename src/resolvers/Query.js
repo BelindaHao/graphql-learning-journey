@@ -17,13 +17,17 @@ exports.Query =  {
     categories: () => categories,
 
     // Products
-    products: (_, { filter }) => {
-      let filterredProducts = products;
-      if(filter) {
-        return filterredProducts.filter( p => p.onSale === filter.onSale);
+    products: (_, { filter, take, offset = 0 }) => {
+      let filterredProducts = filter ? products.filter(p => p.onSale === filter.onSale): [...products];
+      
+      if (offset < 0) {
+        throw new Error('Offset cannot be negative');
       }
 
-      return filterredProducts;
+      const start = offset;
+      const end = take ? start + take : filterredProducts.length;
+
+      return filterredProducts.slice(start, end);
     },
 
     // Product

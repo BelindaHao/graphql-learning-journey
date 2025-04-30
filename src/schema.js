@@ -42,7 +42,7 @@ exports.typeDefs = gql`
     Returns all available products in the system.
     Returns: Non-null array of non-null Product objects.
     """
-    products(filter: ProductsFilterInput): [Product!]!
+    products(filter: ProductsFilterInput, take: Int, offset: Int): [Product!]!
 
     """
     Retrieves a single product by its unique identifier.
