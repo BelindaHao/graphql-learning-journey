@@ -2,6 +2,12 @@
 
 Welcome to my GraphQL learning project! This repository documents my journey in learning GraphQL through practical implementation.
 
+# Repo Structure
+
+Now includes two projects:
+1. **graphql_basic**
+2. **new project name to be decided**
+
 ## Project Goals
 
 - Understand GraphQL fundamentals
@@ -21,6 +27,8 @@ Welcome to my GraphQL learning project! This repository documents my journey in 
 1. Clone this repository
 2. Install dependencies: `npm install`
 3. Start the server: `npm start`
+
+
 
 ## Resources
 
